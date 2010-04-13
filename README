@@ -13,6 +13,7 @@ Todo:
 * Documentation!
 * Traversal access
 * Indexing
+* Prevent multiple copies of the same node or relationship object (implement cache in load node and load relationship)
 
 Getting started:
 
