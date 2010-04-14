@@ -238,7 +238,7 @@ class Relationship extends PropertyContainer
 		$payload = array(
 				'to' => $this->getEndNode()->getUri(),
 				'type' => $this->_type,
-				'properties'=>$this->_data
+				'data'=>$this->_data
 			);
 						
 		list($response, $http_code) = HTTPUtil::jsonPostRequest($this->getUri(), $payload);
