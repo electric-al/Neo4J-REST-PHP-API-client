@@ -45,10 +45,10 @@ class PropertyContainer
 	
 	public function __set($k, $v)
 	{
-		// because neo cant handle NULLs
-		if ($v===NULL) $v = '';
-		
-		$this->_data[$k] = $v;
+		if ($v===NULL && isset($this->_data[$k])) 
+			unset($this->_data[$k]);
+		else
+			$this->_data[$k] = $v;
 	}
 	
 	public function __get($k)
@@ -87,6 +87,9 @@ class Node extends PropertyContainer
 		if (!$this->_is_new) 
 		{
 			list($response, $http_code) = HTTPUtil::deleteRequest($this->getUri());
+			
+			if ($http_code!=204) throw new HttpException($http_code);
+			
 			$this->_id = NULL;
 			$this->_id_new = TRUE;
 		}
@@ -94,9 +97,13 @@ class Node extends PropertyContainer
 	
 	public function save()
 	{
-		list($response, $http_code) = HTTPUtil::jsonPostRequest($this->getUri(), $this->_data);
-
-		if ($http_code!=201) throw new HttpException($http_code);
+		if ($this->_is_new) {
+			list($response, $http_code) = HTTPUtil::jsonPostRequest($this->getUri(), $this->_data);
+			if ($http_code!=201) throw new HttpException($http_code);
+		} else {
+			list($response, $http_code) = HTTPUtil::jsonPutRequest($this->getUri().'/properties', $this->_data);
+			if ($http_code!=204) throw new HttpException($http_code);
+		}
 
 		if ($this->_is_new) 
 		{
@@ -235,16 +242,21 @@ class Relationship extends PropertyContainer
 	
 	public function save()
 	{
-		$payload = array(
+		if ($this->_is_new) {
+			$payload = array(
 				'to' => $this->getEndNode()->getUri(),
 				'type' => $this->_type,
 				'data'=>$this->_data
 			);
-						
-		list($response, $http_code) = HTTPUtil::jsonPostRequest($this->getUri(), $payload);
-
-		if ($http_code!=201) throw new HttpException($http_code);
-
+			
+			list($response, $http_code) = HTTPUtil::jsonPostRequest($this->getUri(), $payload);
+			
+			if ($http_code!=201) throw new HttpException($http_code);
+		} else {
+			list($response, $http_code) = HTTPUtil::jsonPutRequest($this->getUri().'/properties', $this->_data);
+			if ($http_code!=204) throw new HttpException($http_code);
+		}
+				
 		if ($this->_is_new) 
 		{
 			$this->_id = end(explode("/", $response['self']));
@@ -257,6 +269,9 @@ class Relationship extends PropertyContainer
 		if (!$this->_is_new) 
 		{
 			list($response, $http_code) = HTTPUtil::deleteRequest($this->getUri());
+
+			if ($http_code!=204) throw new HttpException($http_code);
+			
 			$this->_id = NULL;
 			$this->_id_new = TRUE;
 		}
@@ -264,9 +279,12 @@ class Relationship extends PropertyContainer
 	
 	public function getUri()
 	{
-		$uri = $this->getStartNode()->getUri().'/relationships';
+		if ($this->_is_new)
+			$uri = $this->getStartNode()->getUri().'/relationships';
+		else
+			$uri  = $this->_neo_db->getBaseUri().'relationship/'.$this->getId();
 	
-		if (!$this->_is_new) $uri .= '/'.$this->getId();
+		//if (!$this->_is_new) $uri .= '/'.$this->getId();
 	
 		return $uri;
 	}
@@ -314,23 +332,27 @@ class HTTPUtil
 	function request($url, $method='GET', $post_data='', $content_type='', $accept_type='')
 	{
 		// Uncomment for debugging
-		//echo 'HTTP: ', $method, " : " ,$url , "\n";
+		//echo 'HTTP: ', $method, " : " ,$url , " : ", $post_data, "\n";
 		
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
+	
+
+		//if ($method==self::POST){
+		//	curl_setopt($ch, CURLOPT_POST, true); 
+		//} else {
+		//	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+		//}
 		
-		if ($method==self::POST){
-			curl_setopt($ch, CURLOPT_POST, true); 
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		} else {
-			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
-		}
-		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+	
 		if ($post_data)
 		{
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+			
 			$headers = array(
 						'Content-Length: ' . strlen($post_data),
 						'Content-Type: '.$content_type,
@@ -338,6 +360,7 @@ class HTTPUtil
 						);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
 		}
+			
 		$response = curl_exec($ch);
 
 		$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -356,6 +379,11 @@ class HTTPUtil
 		$ret = self::request($url, $method, $json, 'application/json', 'application/json');
 		$ret[0] = json_decode($ret[0], TRUE);
 		return $ret;
+	}
+	
+	function jsonPutRequest($url, $data)
+	{
+		return self::jsonRequest($url, self::PUT, $data);
 	}
 	
 	function jsonPostRequest($url, $data)

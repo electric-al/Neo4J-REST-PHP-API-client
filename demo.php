@@ -23,7 +23,12 @@ $thirdNode = $graphDb->createNode();
  *	Assign some attributes to the nodes and save the,
  */
 $firstNode->message = "Hello, ";
+$firstNode->blah = "blah blah";
 $firstNode->save();
+
+$firstNode->blah = NULL;	// Setting to null removes the property
+$firstNode->save();
+
 
 $secondNode->message = "world!";
 $secondNode->someOtherAttribute = 'blah blah blah';
@@ -38,6 +43,10 @@ $thirdNode->save();
  */
 $relationship = $firstNode->createRelationshipTo($secondNode, 'KNOWS');
 $relationship->message = "brave Neo4j";
+$relationship->blah = "blah blah";
+$relationship->save();
+
+$relationship->blah = NULL; // Setting to NULL removed the property
 $relationship->save();
 
 $relationship2 = $thirdNode->createRelationshipTo($secondNode, 'LOVES');
