@@ -21,14 +21,14 @@ class HttpHelper
 	 * A general purpose HTTP request method
 	 *
 	 * @param string $url 
-	 * @param string $method 
+	 * @param string $method HTTP verb
 	 * @param string $post_data 
 	 * @param string $content_type 
 	 * @param string $accept_type 
 	 *
 	 * @return void
 	 */
-	function request($url, $method='GET', $post_data='', $content_type='', $accept_type='')
+	public function request($url, $method='GET', $post_data='', $content_type='', $accept_type='')
 	{
 		// Uncomment for debugging
 		//echo 'HTTP: ', $method, " : " ,$url , " : ", $post_data, "\n";
@@ -38,7 +38,6 @@ class HttpHelper
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); 
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION,1);
-	
 
 		//if ($method==self::POST){
 		//	curl_setopt($ch, CURLOPT_POST, true); 
@@ -78,7 +77,7 @@ class HttpHelper
 	 *
 	 * @return mixed
 	 */
-	function jsonRequest($url, $method, $data=NULL)
+	public function jsonRequest($url, $method, $data=NULL)
 	{
 		$json = json_encode($data);
 		$ret = self::request($url, $method, $json, 'application/json', 'application/json');
@@ -96,7 +95,7 @@ class HttpHelper
 	 *
 	 * @return mixed
 	 */
-	function jsonPutRequest($url, $data)
+	public function jsonPutRequest($url, $data)
 	{
 		return self::jsonRequest($url, self::PUT, $data);
 	}
@@ -111,7 +110,7 @@ class HttpHelper
 	 *
 	 * @return mixed
 	 */
-	function jsonPostRequest($url, $data)
+	public function jsonPostRequest($url, $data)
 	{
 		return self::jsonRequest($url, self::POST, $data);
 	}
@@ -126,7 +125,7 @@ class HttpHelper
 	 *
 	 * @return mixed
 	 */
-	function jsonGetRequest($url)
+	public function jsonGetRequest($url)
 	{
 		return self::jsonRequest($url, self::GET);
 	}
@@ -141,7 +140,7 @@ class HttpHelper
 	 *
 	 * @return mixed
 	 */
-	function deleteRequest($url)
+	public function deleteRequest($url)
 	{
 		return self::request($url, self::DELETE);
 	}

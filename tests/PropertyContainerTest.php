@@ -1,7 +1,7 @@
 <?php
-require_once 'PHPUnit/Framework.php';
+require_once 'NeoRestTestCase.php';
 
-class PropertyContainerTest extends PHPUnit_Framework_TestCase
+class PropertyContainerTest extends NeoRestTestCase
 {
     public function testException()
     {

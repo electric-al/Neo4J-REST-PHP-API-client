@@ -2,7 +2,7 @@
 /**
  *	Include the API PHP file
  */
-require('php-neo-rest.php');
+require_once 'NeoRest.php';
 
 /**
  *	Create a graphDb connection 
@@ -53,14 +53,6 @@ $relationship2 = $thirdNode->createRelationshipTo($secondNode, 'LOVES');
 $relationship2->save();
 
 /**
- *	Dump each node we created
- */
-dump_node($firstNode);
-dump_node($secondNode);
-dump_node($thirdNode);
-
-
-/**
  *	A little utility function to display a node
  */
 function dump_node($node)
@@ -78,3 +70,12 @@ function dump_node($node)
 				"\t\t\t\t\t\t\t\t".json_encode($rel->getProperties())."\n";
 	}
 }
+
+/**
+ *	Dump each node we created
+ */
+dump_node($firstNode);
+dump_node($secondNode);
+dump_node($thirdNode);
+
+

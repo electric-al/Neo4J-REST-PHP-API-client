@@ -1,7 +1,7 @@
 <?php
-require_once 'PHPUnit/Framework.php';
+require_once 'NeoRestTestCase.php';
 
-class HttpHelperTest extends PHPUnit_Framework_TestCase
+class HttpHelperTest extends NeoRestTestCase
 {
     public function testException()
     {

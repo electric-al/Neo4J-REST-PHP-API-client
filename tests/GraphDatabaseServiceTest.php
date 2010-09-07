@@ -1,12 +1,13 @@
 <?php
-require_once 'PHPUnit/Framework.php';
-require_once 'NeoRest.php';
-
-class GraphDatabaseServiceTest extends PHPUnit_Framework_TestCase
+require_once 'NeoRestTestCase.php';
+class GraphDatabaseServiceTest extends NeoRestTestCase
 {
-    public function testException()
+    public function testUrlSetting()
     {
-        $uri = '';
-        list($response, $http_code) = HttpHelper::jsonGetRequest($uri);
+        $this->assertEquals(
+            $this->graphDbUri,
+            $this->graphDb->getBaseUri(),
+            'Hm, it seems like we can not get the URI back.'
+        );
     }
 }

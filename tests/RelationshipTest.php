@@ -1,7 +1,7 @@
 <?php
-require_once 'PHPUnit/Framework.php';
+require_once 'NeoRestTestCase.php';
 
-class RelationshipTest extends PHPUnit_Framework_TestCase
+class RelationshipTest extends NeoRestTestCase
 {
     public function testException()
     {
