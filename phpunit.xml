@@ -1,0 +1,10 @@
+<phpunit>
+  <php>
+    <ini name="date.timezone" value="Europe/Berlin"/>
+  </php>
+  <testsuites>
+    <testsuite name="Neo4JRestPhpApi">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>
