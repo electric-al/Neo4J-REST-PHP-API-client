@@ -4,7 +4,7 @@
 
 class GraphDatabaseService
 {
-	var $base_uri;
+	public $base_uri;
 	
 	public function __construct($base_uri)
 	{
@@ -41,7 +41,7 @@ class GraphDatabaseService
 
 class PropertyContainer
 {
-	var $_data;
+	public $_data;
 	
 	public function __set($k, $v)
 	{
@@ -72,9 +72,9 @@ class PropertyContainer
 
 class Node extends PropertyContainer
 {
-	var $_neo_db;
-	var $_id;
-	var $_is_new;
+	public $_neo_db;
+	public $_id;
+	public $_is_new;
 	
 	public function __construct($neo_db)
 	{
@@ -189,12 +189,12 @@ class Relationship extends PropertyContainer
 	const DIRECTION_IN 		= 'IN';
 	const DIRECTION_OUT 	= 'OUT';
 	
-	var $_is_new;
-	var $_neo_db;
-	var $_id;
-	var $_type;
-	var $_node1;
-	var $_node2;
+	public $_is_new;
+	public $_neo_db;
+	public $_id;
+	public $_type;
+	public $_node1;
+	public $_node2;
 	
 	public function __construct($neo_db, $start_node, $end_node, $type)
 	{

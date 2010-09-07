@@ -21,4 +21,10 @@ Getting started:
 * Run it
 * php demo.php
 
+Requirements:
+
+A PHP that has:
+
+* curl
+
 Note: Only tested with PHP 5.3.
