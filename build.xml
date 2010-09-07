@@ -23,7 +23,7 @@
     <target name="docs" 
         description="Generate API documentation in docs/, using phpdoc.">
         <phpdoc 
-            title="NeoRest docs" 
+            title="NeoRest API documentation" 
             destdir="docs" 
             output="HTML:frames:earthli"
             sourcecode="true"
