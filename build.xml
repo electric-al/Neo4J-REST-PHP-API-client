@@ -19,9 +19,9 @@
             </batchtest>
         </phpunit>
     </target>
-    <!-- output="HTML:frames:earthli" was the default output. -->
+    
     <target name="docs" 
-        description="Generate PHPdoc in eos_docs/.">
+        description="Generate API documentation in docs/, using phpdoc.">
         <phpdoc 
             title="NeoRest docs" 
             destdir="docs" 
