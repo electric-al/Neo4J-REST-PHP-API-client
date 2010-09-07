@@ -23,6 +23,7 @@ Very basic at the moment.
 * Run it
 * php demo.php
 
+
 ## Requirements ##
 
 A PHP that has:
@@ -30,3 +31,14 @@ A PHP that has:
 * curl
 
 Note: Only tested with PHP 5.3.
+
+## Going further ##
+
+Generate API documentation:
+
+`phing docs`
+
+To generate documentation, you need 
+
+* [Phing](http://phing.info/trac/wiki/Users/Download)
+* [PhpDocumentor](http://www.phpdoc.org/)
