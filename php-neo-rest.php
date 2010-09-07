@@ -76,7 +76,7 @@ class Node extends PropertyContainer
 	public $_id;
 	public $_is_new;
 	
-	public function __construct($neo_db)
+	public function __construct(GraphDatabaseService $neo_db)
 	{
 		$this->_neo_db = $neo_db;
 		$this->_is_new = TRUE;
@@ -172,7 +172,7 @@ class Node extends PropertyContainer
 		return $uri;
 	}
 	
-	public static function inflateFromResponse($neo_db, $response)
+	public static function inflateFromResponse(GraphDatabaseService $neo_db, $response)
 	{
 		$node = new Node($neo_db);
 		$node->_is_new = FALSE;
@@ -196,7 +196,7 @@ class Relationship extends PropertyContainer
 	public $_node1;
 	public $_node2;
 	
-	public function __construct($neo_db, $start_node, $end_node, $type)
+	public function __construct(GraphDatabaseService $neo_db, $start_node, $end_node, $type)
 	{
 		$this->_neo_db = $neo_db;
 		$this->_is_new = TRUE;
@@ -289,7 +289,7 @@ class Relationship extends PropertyContainer
 		return $uri;
 	}
 	
-	public static function inflateFromResponse($neo_db, $response)
+	public static function inflateFromResponse(GraphDatabaseService $neo_db, $response)
 	{
 		$start_id = end(explode("/", $response['start']));
 		$end_id = end(explode("/", $response['end']));
