@@ -1,0 +1,45 @@
+<project name="neo4jrestapiclient"
+    description="Neo4J REST PHP API client." 
+    default="test" 
+    basedir=".">
+    
+    <!-- Properties are variables for this build file. -->
+    <property name="package"  value="${phing.project.name}" override="true" />
+    <property name="builddir" value="." override="true" />
+    <property name="srcdir"   value="${project.basedir}" override="true" />
+    
+    <target name="test"
+        description="Run all PHPUnit tests.">
+        <phpunit haltonfailure="true" haltonerror="true">
+            <formatter type="plain" usefile="false"/>
+            <batchtest>
+                <fileset dir=".">
+                    <include name="**/*Test*.php"/>
+                </fileset>
+            </batchtest>
+        </phpunit>
+    </target>
+    <!-- output="HTML:frames:earthli" was the default output. -->
+    <target name="docs" 
+        description="Generate PHPdoc in eos_docs/.">
+        <phpdoc 
+            title="NeoRest docs" 
+            destdir="docs" 
+            output="HTML:frames:earthli"
+            sourcecode="true"
+            parseprivate="true"
+            javadocdesc="false"
+            quiet="true"
+            defaultpackagename="NeoRest"
+            pear="false">
+            <fileset dir=".">
+                <include name="**/*.php" />
+            </fileset>
+            <projdocfileset dir=".">
+                <include name="README.md" />
+            </projdocfileset>
+        </phpdoc>
+    </target>
+    
+    
+</project>
