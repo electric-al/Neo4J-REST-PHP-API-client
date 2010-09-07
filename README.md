@@ -1,6 +1,8 @@
-Neo4J PHP REST API client
+# Neo4J PHP REST API client #
 
-Very basic at the moment. Features:
+Very basic at the moment.
+
+## Features ##
 
 * Node creation
 * Node loading by id
@@ -8,20 +10,20 @@ Very basic at the moment. Features:
 * Create relationship between two nodes
 * List / filter relationships on a node
 
-Todo:
+## Todo ##
 
 * Documentation!
 * Traversal access
 * Indexing
 * Prevent multiple copies of the same node or relationship object (implement cache in load node and load relationship)
 
-Getting started:
+## Getting started ##
 
 * Download the latest version of the Neo4j REST component
 * Run it
 * php demo.php
 
-Requirements:
+## Requirements ##
 
 A PHP that has:
 
