@@ -31,12 +31,16 @@
             javadocdesc="false"
             quiet="true"
             defaultpackagename="NeoRest"
+            packageoutput="NeoRest"
             pear="false">
             <fileset dir=".">
-                <include name="**/*.php" />
+                <include name="NeoRest/*.php" />
+                <include name="NeoRest.php" />
+                <!-- <include name="examples/demo.php" /> -->
             </fileset>
             <projdocfileset dir=".">
                 <include name="README.md" />
+                <include name="examples/demo.php" />
             </projdocfileset>
         </phpdoc>
     </target>

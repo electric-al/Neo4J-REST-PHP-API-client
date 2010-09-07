@@ -1,6 +1,12 @@
 <?php
 /**
- *	Include the API PHP file
+ * Example of REST API usage
+ *
+ * @package NeoRest
+ */
+
+/**
+ * Include the API PHP file
  */
 require_once 'NeoRest.php';
 

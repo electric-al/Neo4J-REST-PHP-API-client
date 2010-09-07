@@ -8,6 +8,8 @@
 /**
  * GraphDatabaseService abstracts a Neo4J database server.
  *
+ * @example ../examples/demo.php Using the GraphDatabaseService
+ *
  * @package NeoRest
  */
 class GraphDatabaseService
