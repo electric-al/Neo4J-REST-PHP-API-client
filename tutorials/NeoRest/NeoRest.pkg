@@ -1,0 +1,21 @@
+<refentry id="{@id}">
+ <refnamediv>
+  <refname>User Guide for NeoRest</refname>
+  <refpurpose>Getting to know the REST API of Neo4J</refpurpose>
+ </refnamediv>
+ <refsynopsisdiv>
+  <author>
+   Olle Jonsson
+   <authorblurb>
+    {@link mailto:olle.jonsson@gmail.com Olle Jonsson}
+   </authorblurb>
+  </author>
+ </refsynopsisdiv>
+ {@toc}
+ <refsect1 id="{@id intro}">
+  <title>Guide to NeoRest</title>
+  <para>
+   This will be the User Guide for NeoRest. Seriously.
+  </para>
+ </refsect1>
+</refentry>

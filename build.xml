@@ -33,6 +33,9 @@
             defaultpackagename="NeoRest"
             packageoutput="NeoRest"
             pear="false">
+            <fileset dir="tutorials">
+              <include name="NeoRest/**" />
+            </fileset>
             <fileset dir=".">
                 <include name="NeoRest/*.php" />
                 <include name="NeoRest.php" />
