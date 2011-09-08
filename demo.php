@@ -9,7 +9,7 @@ require('php-neo-rest.php');
  *	Note:	this does not actually perform any network access, 
  *			the server is only accessed when you use the database
  */
-$graphDb = new GraphDatabaseService('http://localhost:9999/');
+$graphDb = new GraphDatabaseService('http://localhost:7474/db/data/');
 
 /**
  *	Lets create some nodes
