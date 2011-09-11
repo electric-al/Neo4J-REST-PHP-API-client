@@ -8,7 +8,7 @@ class GraphDatabaseService
 	
 	public function __construct($base_uri)
 	{
-		$this->base_uri = $base_uri;
+		$this->base_uri = $base_uri.'db/data/';
 	}
 	
 	public function getNodeById($node_id)
@@ -314,6 +314,50 @@ class HttpException extends Exception
 class NotFoundException extends Exception
 {
 }
+
+class Traversal 
+{
+	/*const RETURN_TYPE_NODE = 'node';
+	const RETURN_TYPE_RELATIONSHIP = 'relationship';
+	const RETURN_TYPE_POSITION = 'position';
+	const RETURN_TYPE_PATH = 'path';*/
+	
+	const RETURN_FILTER_ALL = 'all';
+	const RETURN_FILTER_ALL_BUT_START_NODE = 'all but start node';
+	
+	const ORDER_DEPTH_FIRST = 'depth first';
+	const ORDER_BREADTH_FIRST = 'breadth first';
+	
+	public function setOrder($order)
+	{	
+		$this->order = $order;
+		return $this;
+	}
+	
+	public function setMaxDepth($max_depth)
+	{
+		$this->max_depth = $max_depth;
+		return $this;
+	}
+	
+	public function setReturnFilter()
+	{
+	}
+	
+	public function setPruneEvaluator()
+	{
+	}
+	
+	public function setReturnType($return_type)
+	{
+	}
+	
+	public function getNodes()
+	{
+		
+	}
+}
+
 
 
 /**
