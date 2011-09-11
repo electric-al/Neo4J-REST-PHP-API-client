@@ -11,6 +11,7 @@ require('php-neo-rest.php');
  */
 $graphDb = new GraphDatabaseService('http://localhost:7474/');
 
+
 /**
  *	Lets create some nodes
  *	Note: Unlike the java API, these nodes are NOT saved until you call the save() method (see below)
@@ -58,6 +59,16 @@ $relationship2->save();
 dump_node($firstNode);
 dump_node($secondNode);
 dump_node($thirdNode);
+
+
+
+/**
+ *	Perform Cypher Query
+ */
+$script = 'START a = ('.$secondNode->getId().') MATCH (a)<-->(x) RETURN x';
+$res = $graphDb->performCypherQuery($script);
+
+var_dump($res);
 
 
 /**
