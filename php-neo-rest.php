@@ -40,7 +40,7 @@ class GraphDatabaseService
 
 	public function performPluginCommand($plugin, $command, $data, $inflate_nodes = true)
 	{
-		$uri = $this->base_uri.'ext/'.$plugin.'Plugin/graphdb/'$command;
+		$uri = $this->base_uri.'ext/'.$plugin.'Plugin/graphdb/'.$command;
 			
 		list($response, $http_code) = HTTPUtil::jsonPostRequest($uri, $data);
 				
