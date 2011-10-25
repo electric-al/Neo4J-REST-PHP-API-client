@@ -37,10 +37,10 @@ class GraphDatabaseService
 	{
 		return $this->base_uri;
 	}
-	
-	public function performCypherQuery($query, $inflate_nodes=true){ 
-		$uri = $this->base_uri.'ext/CypherPlugin/graphdb/execute_query';
-		$data = array('query'=>$query);
+
+	public function performPluginCommand($plugin, $command, $data, $inflate_nodes = true)
+	{
+		$uri = $this->base_uri.'ext/'.$plugin.'Plugin/graphdb/'$command;
 			
 		list($response, $http_code) = HTTPUtil::jsonPostRequest($uri, $data);
 				
@@ -65,6 +65,14 @@ class GraphDatabaseService
 			default:
 				throw new HttpException($http_code);
 		}
+	}
+	
+	public function performCypherQuery($query, $inflate_nodes=true){
+		return $this->performPluginCommand('Cypher', 'execute_query', array('query' => $query));
+	}
+	
+	public function performGremlinScript($script, $inflate_nodes=true){ 
+		return $this->performPluginCommand('Gremlin', 'execute_script', array('script' => $script));
 	}
 }
 
