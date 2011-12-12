@@ -37,10 +37,10 @@ class GraphDatabaseService
 	{
 		return $this->base_uri;
 	}
-	
-	public function performCypherQuery($query, $inflate_nodes=true){ 
-		$uri = $this->base_uri.'ext/CypherPlugin/graphdb/execute_query';
-		$data = array('query'=>$query);
+
+	public function performPluginCommand($plugin, $command, $data, $inflate_nodes = true)
+	{
+		$uri = $this->base_uri.'ext/'.$plugin.'Plugin/graphdb/'.$command;
 			
 		list($response, $http_code) = HTTPUtil::jsonPostRequest($uri, $data);
 				
@@ -65,6 +65,14 @@ class GraphDatabaseService
 			default:
 				throw new HttpException($http_code);
 		}
+	}
+	
+	public function performCypherQuery($query, $inflate_nodes=true){
+		return $this->performPluginCommand('Cypher', 'execute_query', array('query' => $query));
+	}
+	
+	public function performGremlinScript($script, $inflate_nodes=true){ 
+		return $this->performPluginCommand('Gremlin', 'execute_script', array('script' => $script));
 	}
 }
 
@@ -105,7 +113,7 @@ class Node extends PropertyContainer
 	var $_id;
 	var $_is_new;
 	
-	public function __construct($neo_db)
+	public function __construct(GraphDatabaseService $neo_db)
 	{
 		$this->_neo_db = $neo_db;
 		$this->_is_new = TRUE;
@@ -186,7 +194,7 @@ class Node extends PropertyContainer
 		return $relationships;
 	}
 	
-	public function createRelationshipTo($node, $type)
+	public function createRelationshipTo(Node $node, $type)
 	{
 		$relationship = new Relationship($this->_neo_db, $this, $node, $type);
 		return $relationship;
@@ -201,7 +209,7 @@ class Node extends PropertyContainer
 		return $uri;
 	}
 	
-	public static function inflateFromResponse($neo_db, $response)
+	public static function inflateFromResponse(GraphDatabaseService $neo_db, array $response)
 	{
 		$node = new Node($neo_db);
 		$node->_is_new = FALSE;
@@ -225,7 +233,7 @@ class Relationship extends PropertyContainer
 	var $_node1;
 	var $_node2;
 	
-	public function __construct($neo_db, $start_node, $end_node, $type)
+	public function __construct(GraphDatabaseService $neo_db, Node $start_node, Node $end_node, $type)
 	{
 		$this->_neo_db = $neo_db;
 		$this->_is_new = TRUE;
@@ -264,7 +272,7 @@ class Relationship extends PropertyContainer
 		return $this->_node2;
 	}
 	
-	public function getOtherNode($node)
+	public function getOtherNode(Node $node)
 	{
 		return ($this->_node1->getId()==$node->getId()) ? $this->getStartNode() : $this->getEndNode();
 	}
@@ -318,7 +326,7 @@ class Relationship extends PropertyContainer
 		return $uri;
 	}
 	
-	public static function inflateFromResponse($neo_db, $response)
+	public static function inflateFromResponse(GraphDatabaseService $neo_db, array $response)
 	{
 		$start_id = end(explode("/", $response['start']));
 		$end_id = end(explode("/", $response['end']));
